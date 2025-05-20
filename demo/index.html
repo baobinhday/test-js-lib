@@ -51,7 +51,7 @@
     }
   </style>
   <!-- Import thư viện từ file bundle -->
-  <script src="/button-lib.js"></script>
+  <script type="module" src="button-lib.js"></script>
   <!-- Import jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
@@ -116,23 +116,6 @@
   <script>
     $(document).ready(function() {
       // Create Button 3 using our library
-      if (typeof ButtonLib !== 'undefined') {
-        const button3Options = {
-          buttonText: 'Toggle Camera Content',
-          containerId: 'demo3-container'
-        };
-
-        const button3 = ButtonLib.createButton(button3Options);
-
-        // Set initial content
-        button3.setContent(`
-          <div>
-            <h3>Camera Content</h3>
-            <p>This content will be shown when you click the button.</p>
-            <p>You can also use the "Open Camera" button to access your camera.</p>
-          </div>
-        `);
-      }
 
       // Camera functionality
       let stream = null;

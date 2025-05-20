@@ -1,5 +1,5 @@
 // Import thư viện từ source code
-import ButtonLib, { ButtonOptions } from "../src/index";
+import ButtonLib2, { ButtonOptions } from "../src/index";
 
 // Demo code
 document.addEventListener("DOMContentLoaded", () => {
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     containerId: "demo2-container",
   };
 
-  const button2 = ButtonLib.createButton(button2Options);
+  const button2 = ButtonLib2.createButton(button2Options);
 
   // Set nội dung ban đầu
   const textarea = document.getElementById(
