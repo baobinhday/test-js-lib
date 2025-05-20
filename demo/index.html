@@ -52,6 +52,8 @@
   </style>
   <!-- Import thư viện từ file bundle -->
   <script src="/button-lib.js"></script>
+  <!-- Import jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
   <h1>Button Library Demo</h1>
@@ -70,13 +72,22 @@
     <div id="demo2-container"></div>
   </div>
 
+  <div class="demo-section">
+    <h2>Demo 3: Camera Access</h2>
+    <div>
+      <button id="camera-button">Open Camera</button>
+      <div id="camera-container" style="margin-top: 15px;">
+        <video id="camera-preview" style="width: 100%; max-width: 640px; display: none;" autoplay></video>
+      </div>
+      <div id="demo3-container"></div>
+    </div>
+  </div>
+
   <!-- Script for Button 1 -->
   <script>
     // Ensure the script runs after the page is fully loaded
     window.addEventListener('load', function() {
       // Check if ButtonLib is available
-        console.log("aa")
-
       if (typeof ButtonLib !== 'undefined') {
         // Tạo button với nội dung cơ bản
         const button1Options = {
@@ -98,6 +109,70 @@
         document.getElementById('demo1-container').innerHTML =
           '<div style="color: red;">Error: ButtonLib library not loaded properly</div>';
       }
+    });
+  </script>
+
+  <!-- Script for Camera Button -->
+  <script>
+    $(document).ready(function() {
+      // Create Button 3 using our library
+      if (typeof ButtonLib !== 'undefined') {
+        const button3Options = {
+          buttonText: 'Toggle Camera Content',
+          containerId: 'demo3-container'
+        };
+
+        const button3 = ButtonLib.createButton(button3Options);
+
+        // Set initial content
+        button3.setContent(`
+          <div>
+            <h3>Camera Content</h3>
+            <p>This content will be shown when you click the button.</p>
+            <p>You can also use the "Open Camera" button to access your camera.</p>
+          </div>
+        `);
+      }
+
+      // Camera functionality
+      let stream = null;
+
+      // Handle camera button click
+      $('#camera-button').click(function() {
+        const videoElement = document.getElementById('camera-preview');
+
+        if (videoElement.style.display === 'none') {
+          // Open camera
+          if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+              .then(function(mediaStream) {
+                stream = mediaStream;
+                videoElement.srcObject = mediaStream;
+                videoElement.style.display = 'block';
+                $('#camera-button').text('Close Camera');
+
+                // Automatically click button3 to show content
+                setTimeout(function() {
+                  $('.button-lib-button').eq(2).click();
+                }, 500);
+              })
+              .catch(function(error) {
+                console.error('Error accessing camera:', error);
+                alert('Could not access the camera. Please make sure you have granted permission.');
+              });
+          } else {
+            alert('Your browser does not support camera access.');
+          }
+        } else {
+          // Close camera
+          if (stream) {
+            stream.getTracks().forEach(track => track.stop());
+            stream = null;
+          }
+          videoElement.style.display = 'none';
+          $('#camera-button').text('Open Camera');
+        }
+      });
     });
   </script>
 </body>
