@@ -1,16 +1,23 @@
 import './styles.css';
+import { ButtonOptions, ButtonContent } from './types';
 
 /**
  * Button component that displays content when clicked
  */
 export class Button {
+  private buttonText: string;
+  private containerId: string;
+  private content: ButtonContent | null;
+  public isContentVisible: boolean;
+  private container: HTMLElement | null;
+  private button: HTMLButtonElement | null;
+  private contentElement: HTMLElement | null;
+
   /**
    * Create a new Button instance
-   * @param {Object} options - Configuration options
-   * @param {string} options.buttonText - Text to display on the button
-   * @param {string} options.containerId - ID of the container element
+   * @param options - Configuration options
    */
-  constructor(options = {}) {
+  constructor(options: ButtonOptions = {}) {
     this.buttonText = options.buttonText || 'Click Me';
     this.containerId = options.containerId || 'button-lib-container';
     this.content = null;
@@ -23,7 +30,7 @@ export class Button {
   /**
    * Initialize the button and content container
    */
-  init() {
+  public init(): Button {
     // Find or create container
     this.container = document.getElementById(this.containerId);
     if (!this.container) {
@@ -55,9 +62,9 @@ export class Button {
 
   /**
    * Set the content to be displayed
-   * @param {string|HTMLElement} content - Content to display
+   * @param content - Content to display
    */
-  setContent(content) {
+  public setContent(content: ButtonContent): Button {
     this.content = content;
     
     if (this.contentElement) {
@@ -75,7 +82,7 @@ export class Button {
   /**
    * Toggle content visibility
    */
-  toggleContent() {
+  public toggleContent(): Button {
     this.isContentVisible = !this.isContentVisible;
     
     if (this.contentElement) {

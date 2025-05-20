@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const libraryConfig = {
   name: 'library',
   mode: 'production',
-  entry: './src/index.js',
+  entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'button-lib.js',
@@ -18,6 +18,11 @@ const libraryConfig = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
+      },
+      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
@@ -29,6 +34,9 @@ const libraryConfig = {
         use: ['style-loader', 'css-loader'],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
 };
 
@@ -36,13 +44,18 @@ const libraryConfig = {
 const demoConfig = {
   name: 'demo',
   mode: 'development',
-  entry: './demo/demo.js',
+  entry: './demo/demo.ts',
   output: {
     path: path.resolve(__dirname, 'demo/dist'),
     filename: 'demo.bundle.js',
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: 'ts-loader',
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -55,6 +68,9 @@ const demoConfig = {
         use: ['style-loader', 'css-loader'],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new HtmlWebpackPlugin({

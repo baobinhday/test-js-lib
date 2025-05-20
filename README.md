@@ -1,6 +1,6 @@
 # Button Library
 
-Một thư viện JavaScript đơn giản tạo ra một button, khi click vào button sẽ hiển thị nội dung được truyền vào từ bên ngoài.
+Một thư viện TypeScript đơn giản tạo ra một button, khi click vào button sẽ hiển thị nội dung được truyền vào từ bên ngoài.
 
 ## Cài đặt
 
@@ -20,12 +20,16 @@ npm install button-lib
 
 ### Tạo một button cơ bản
 
-```javascript
+```typescript
+import ButtonLib, { ButtonOptions } from 'button-lib';
+
 // Tạo button với nội dung cơ bản
-const button = ButtonLib.createButton({
+const buttonOptions: ButtonOptions = {
   buttonText: 'Click Me', // Tùy chọn, mặc định là 'Click Me'
   containerId: 'my-container' // Tùy chọn, mặc định là 'button-lib-container'
-});
+};
+
+const button = ButtonLib.createButton(buttonOptions);
 
 // Set nội dung
 button.setContent(`
@@ -38,29 +42,49 @@ button.setContent(`
 
 ### Cập nhật nội dung động
 
-```javascript
+```typescript
+import ButtonLib, { ButtonOptions } from 'button-lib';
+
 // Tạo button
-const button = ButtonLib.createButton({
+const buttonOptions: ButtonOptions = {
   buttonText: 'Toggle Content',
   containerId: 'my-container'
-});
+};
+
+const button = ButtonLib.createButton(buttonOptions);
 
 // Set nội dung ban đầu
 button.setContent('<p>Initial content</p>');
 
 // Cập nhật nội dung sau đó
-document.getElementById('update-button').addEventListener('click', () => {
-  const newContent = document.getElementById('content-input').value;
-  button.setContent(newContent);
-  
-  // Hiển thị nội dung nếu đang ẩn
-  if (!button.isContentVisible) {
-    button.toggleContent();
-  }
-});
+const updateButton = document.getElementById('update-button');
+const contentInput = document.getElementById('content-input') as HTMLInputElement;
+
+if (updateButton && contentInput) {
+  updateButton.addEventListener('click', () => {
+    const newContent = contentInput.value;
+    button.setContent(newContent);
+
+    // Hiển thị nội dung nếu đang ẩn
+    if (!button.isContentVisible) {
+      button.toggleContent();
+    }
+  });
+}
 ```
 
 ## API
+
+### Types
+
+```typescript
+interface ButtonOptions {
+  buttonText?: string;
+  containerId?: string;
+}
+
+type ButtonContent = string | HTMLElement;
+```
 
 ### ButtonLib.createButton(options)
 
@@ -68,9 +92,9 @@ Tạo một button mới và khởi tạo nó.
 
 **Tham số:**
 
-- `options` (Object): Các tùy chọn cấu hình
-  - `buttonText` (String): Văn bản hiển thị trên button (mặc định: 'Click Me')
-  - `containerId` (String): ID của phần tử container (mặc định: 'button-lib-container')
+- `options` (ButtonOptions): Các tùy chọn cấu hình
+  - `buttonText` (string): Văn bản hiển thị trên button (mặc định: 'Click Me')
+  - `containerId` (string): ID của phần tử container (mặc định: 'button-lib-container')
 
 **Trả về:** Instance của Button
 
@@ -80,7 +104,7 @@ Tạo một button mới và khởi tạo nó.
 
 **Tham số:**
 
-- `content` (String|HTMLElement): Nội dung để hiển thị
+- `content` (ButtonContent): Nội dung để hiển thị (string hoặc HTMLElement)
 
 **Trả về:** Instance của Button (cho phép method chaining)
 
@@ -100,6 +124,12 @@ Xem file `example-usage.html` để biết ví dụ đầy đủ về cách sử
 
 ```bash
 npm install
+```
+
+### Type checking
+
+```bash
+npm run type-check
 ```
 
 ### Build thư viện
