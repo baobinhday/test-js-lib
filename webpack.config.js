@@ -78,9 +78,15 @@ const demoConfig = {
     }),
   ],
   devServer: {
-    static: {
-      directory: path.join(__dirname, 'demo/dist'),
-    },
+    static: [
+      {
+        directory: path.join(__dirname, 'demo/dist'),
+      },
+      {
+        directory: path.join(__dirname, 'dist'),
+        publicPath: '/',
+      }
+    ],
     compress: true,
     port: 9000,
   },
