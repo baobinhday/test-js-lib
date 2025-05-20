@@ -1,0 +1,29 @@
+{
+  "name": "test-js-lib",
+  "version": "1.0.0",
+  "main": "dist/button-lib.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "dev": "webpack serve --config webpack.config.js --config-name demo",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "button",
+    "ui",
+    "library"
+  ],
+  "author": "",
+  "license": "ISC",
+  "description": "A simple button library that displays content when clicked",
+  "devDependencies": {
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "babel-loader": "^10.0.0",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.99.8",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.1"
+  }
+}
