@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,6 +56,7 @@
   <!-- Import jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
+
 <body>
   <h1>Button Library Demo</h1>
 
@@ -66,7 +68,8 @@
   <div class="demo-section">
     <h2>Demo 2: Custom Content</h2>
     <div class="demo-controls">
-      <textarea id="custom-content" placeholder="Enter HTML content here..."><h3>Custom Content</h3><p>This is some <strong>custom HTML</strong> content that you can change!</p></textarea>
+      <textarea id="custom-content"
+        placeholder="Enter HTML content here..."><h3>Custom Content</h3><p>This is some <strong>custom HTML</strong> content that you can change!</p></textarea>
       <button id="update-content">Update Content</button>
     </div>
     <div id="demo2-container"></div>
@@ -86,13 +89,17 @@
   <!-- Script for Button 1 -->
   <script>
     // Ensure the script runs after the page is fully loaded
-    window.addEventListener('load', function() {
+    window.addEventListener('load', function () {
       // Check if ButtonLib is available
       if (typeof ButtonLib !== 'undefined') {
         // Tạo button với nội dung cơ bản
         const button1Options = {
           buttonText: 'Click to Show Content',
-          containerId: 'demo1-container'
+          containerId: 'demo1-container',
+          onClick: () => {
+            console.log("Hello - Button with callback was clicked!");
+            alert("Hello")
+          }
         };
         const button1 = ButtonLib.createButton(button1Options);
 
@@ -114,32 +121,32 @@
 
   <!-- Script for Camera Button -->
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       // Create Button 3 using our library
 
       // Camera functionality
       let stream = null;
 
       // Handle camera button click
-      $('#camera-button').click(function() {
+      $('#camera-button').click(function () {
         const videoElement = document.getElementById('camera-preview');
 
         if (videoElement.style.display === 'none') {
           // Open camera
           if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             navigator.mediaDevices.getUserMedia({ video: true })
-              .then(function(mediaStream) {
+              .then(function (mediaStream) {
                 stream = mediaStream;
                 videoElement.srcObject = mediaStream;
                 videoElement.style.display = 'block';
                 $('#camera-button').text('Close Camera');
 
                 // Automatically click button3 to show content
-                setTimeout(function() {
+                setTimeout(function () {
                   $('.button-lib-button').eq(2).click();
                 }, 500);
               })
-              .catch(function(error) {
+              .catch(function (error) {
                 console.error('Error accessing camera:', error);
                 alert('Could not access the camera. Please make sure you have granted permission.');
               });
@@ -159,4 +166,5 @@
     });
   </script>
 </body>
+
 </html>

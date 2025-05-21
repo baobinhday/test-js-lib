@@ -54,4 +54,16 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   }
+// Demo 3: Button with onClick callback
+const button3Options: ButtonOptions = {
+  buttonText: "Button With Callback",
+  containerId: "demo3-container",
+  onClick: () => {
+    console.log("Button with callback was clicked!");
+    // You can perform any custom logic here
+  }
+};
+const button3 = ButtonLib2.createButton(button3Options);
+// Optionally set content for demonstration
+button3.setContent("<p>This button calls a custom callback before toggling content.</p>");
 });

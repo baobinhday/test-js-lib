@@ -11,6 +11,7 @@ export declare class Button {
     private container;
     private button;
     private contentElement;
+    private onClickCallback?;
     /**
      * Create a new Button instance
      * @param options - Configuration options

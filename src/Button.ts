@@ -12,6 +12,7 @@ export class Button {
   private container: HTMLElement | null;
   private button: HTMLButtonElement | null;
   private contentElement: HTMLElement | null;
+  private onClickCallback?: () => void;
 
   /**
    * Create a new Button instance
@@ -25,6 +26,7 @@ export class Button {
     this.container = null;
     this.button = null;
     this.contentElement = null;
+    this.onClickCallback = options.onClick;
   }
 
   /**
@@ -38,25 +40,31 @@ export class Button {
       this.container.id = this.containerId;
       document.body.appendChild(this.container);
     }
-    
+
     // Clear container
     this.container.innerHTML = '';
-    
+
     // Create button
     this.button = document.createElement('button');
     this.button.textContent = this.buttonText;
     this.button.className = 'button-lib-button';
     this.container.appendChild(this.button);
-    
+
     // Create content container (initially hidden)
     this.contentElement = document.createElement('div');
     this.contentElement.className = 'button-lib-content';
     this.contentElement.style.display = 'none';
     this.container.appendChild(this.contentElement);
-    
-    // Add click event listener
-    this.button.addEventListener('click', this.toggleContent.bind(this));
-    
+
+    // Add click event listener that first executes external callback then toggles content
+    this.button.addEventListener('click', (e: MouseEvent) => {
+      e.preventDefault();
+      if (this.onClickCallback) {
+        this.onClickCallback();
+      }
+      this.toggleContent();
+    });
+
     return this;
   }
 

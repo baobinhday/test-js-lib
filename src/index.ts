@@ -22,6 +22,6 @@ const ButtonLib: ButtonLibrary = {
 export default ButtonLib;
 
 // Ensure global exposure for UMD/browser users
-// if (typeof window !== "undefined") {
-//   (window as any).ButtonLib = ButtonLib;
-// }
+if (typeof window !== "undefined") {
+  (window as any).ButtonLib = ButtonLib;
+}

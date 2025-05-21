@@ -6,11 +6,16 @@ export interface ButtonOptions {
    * Text to display on the button
    */
   buttonText?: string;
-  
+
   /**
    * ID of the container element
    */
   containerId?: string;
+
+  /**
+   * Optional callback invoked when the button is clicked
+   */
+  onClick?: () => void;
 }
 
 /**

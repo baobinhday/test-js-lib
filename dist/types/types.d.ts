@@ -10,6 +10,10 @@ export interface ButtonOptions {
      * ID of the container element
      */
     containerId?: string;
+    /**
+     * Optional callback invoked when the button is clicked
+     */
+    onClick?: () => void;
 }
 /**
  * Type for content that can be displayed
