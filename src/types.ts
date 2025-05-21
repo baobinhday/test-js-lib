@@ -13,9 +13,10 @@ export interface ButtonOptions {
   containerId?: string;
 
   /**
-   * Optional callback invoked when the button is clicked
+   * Optional callback invoked after a file is selected
+   * Receives the file name as a parameter
    */
-  onClick?: () => void;
+  onClick?: (fileName: string) => void;
 }
 
 /**

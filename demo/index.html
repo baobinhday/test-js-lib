@@ -96,9 +96,9 @@
         const button1Options = {
           buttonText: 'Click to Show Content',
           containerId: 'demo1-container',
-          onClick: () => {
+          onClick: (result) => {
             console.log("Hello - Button with callback was clicked!");
-            alert("Hello")
+            alert(result)
           }
         };
         const button1 = ButtonLib.createButton(button1Options);

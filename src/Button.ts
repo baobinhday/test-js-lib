@@ -12,7 +12,8 @@ export class Button {
   private container: HTMLElement | null;
   private button: HTMLButtonElement | null;
   private contentElement: HTMLElement | null;
-  private onClickCallback?: (text: string) => void;
+  private fileInput: HTMLInputElement | null;
+  private onClickCallback?: (fileName: string) => void;
 
   /**
    * Create a new Button instance
@@ -26,6 +27,7 @@ export class Button {
     this.container = null;
     this.button = null;
     this.contentElement = null;
+    this.fileInput = null;
     this.onClickCallback = options.onClick;
   }
 
@@ -40,15 +42,21 @@ export class Button {
       this.container.id = this.containerId;
       document.body.appendChild(this.container);
     }
-
+  
     // Clear container
     this.container.innerHTML = '';
-
+  
     // Create button
     this.button = document.createElement('button');
     this.button.textContent = this.buttonText;
     this.button.className = 'button-lib-button';
     this.container.appendChild(this.button);
+
+    // Create hidden file input
+    this.fileInput = document.createElement('input');
+    this.fileInput.type = 'file';
+    this.fileInput.style.display = 'none';
+    this.container.appendChild(this.fileInput);
 
     // Create content container (initially hidden)
     this.contentElement = document.createElement('div');
@@ -56,13 +64,28 @@ export class Button {
     this.contentElement.style.display = 'none';
     this.container.appendChild(this.contentElement);
 
-    // Add click event listener that first executes external callback then toggles content
+    // On file selection, pass filename to callback
+    this.fileInput.addEventListener('change', (event: Event) => {
+      const target = event.target as HTMLInputElement;
+      const file = target.files && target.files[0];
+      if (file && this.onClickCallback) {
+        // Call the callback with the selected file name
+        this.onClickCallback(`File: ${file.name}`);
+      }
+      // Optionally toggle content after file is picked
+      this.toggleContent();
+      // Reset input for next click
+      if (this.fileInput) {
+        this.fileInput.value = '';
+      }
+    });
+
+    // On button click, trigger file input dialog
     this.button.addEventListener('click', (e: MouseEvent) => {
       e.preventDefault();
-      if (this.onClickCallback) {
-        this.onClickCallback("Hello from ButtonLib");
+      if (this.fileInput) {
+        this.fileInput.click();
       }
-      this.toggleContent();
     });
 
     return this;
