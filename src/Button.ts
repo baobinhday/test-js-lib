@@ -60,7 +60,7 @@ export class Button {
     this.button.addEventListener('click', (e: MouseEvent) => {
       e.preventDefault();
       if (this.onClickCallback) {
-        this.onClickCallback("Hello from javascript");
+        this.onClickCallback("Hello from ButtonLib");
       }
       this.toggleContent();
     });
