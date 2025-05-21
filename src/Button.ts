@@ -12,7 +12,7 @@ export class Button {
   private container: HTMLElement | null;
   private button: HTMLButtonElement | null;
   private contentElement: HTMLElement | null;
-  private onClickCallback?: () => void;
+  private onClickCallback?: (text: string) => void;
 
   /**
    * Create a new Button instance
@@ -60,7 +60,7 @@ export class Button {
     this.button.addEventListener('click', (e: MouseEvent) => {
       e.preventDefault();
       if (this.onClickCallback) {
-        this.onClickCallback();
+        this.onClickCallback("Hello from javascript");
       }
       this.toggleContent();
     });
